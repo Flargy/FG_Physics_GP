@@ -19,6 +19,7 @@ public class SwingingPlayer : MonoBehaviour
 
     [SerializeField] private float movementSpeed = 10.0f;
     [SerializeField] private float maxRopeLength = 50.0f;
+    [SerializeField] private float jumpStrength = 10.0f;
 
     private Vector2 movementInput;
     private Rigidbody2D body;
@@ -30,11 +31,15 @@ public class SwingingPlayer : MonoBehaviour
     private bool lookForPositive = false;
 
     private float currentRopeLength = 0.0f;
+    private Vector2 jumpVelocity;
+
+    private DistanceJoint2D joint;
 
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
         lineRenderer = GetComponent<LineRenderer>();
+        joint = GetComponent<DistanceJoint2D>();
     }
 
     
@@ -60,14 +65,21 @@ public class SwingingPlayer : MonoBehaviour
             movementInput += -Vector2.right * movementSpeed;
         }
         
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            
+            jumpVelocity = Vector2.up * jumpStrength;
+             
+        }
+        
+        /*if (Input.GetKey(KeyCode.W))
         {
             movementInput += Vector2.up * movementSpeed;
         }
         else if (Input.GetKey(KeyCode.S))
         {
             movementInput += -Vector2.up * movementSpeed;
-        }
+        }*/
 
         Vector2.ClampMagnitude(movementInput, movementSpeed);
     }
@@ -81,6 +93,7 @@ public class SwingingPlayer : MonoBehaviour
                 linePoints.Clear();
                 lineRenderer.positionCount = 0;
                 isAttached = false;
+                joint.enabled = false;
                 return;
             }
 
@@ -140,7 +153,7 @@ public class SwingingPlayer : MonoBehaviour
     {
         linePoints.RemoveAt(linePoints.Count - 2);
         lineRenderer.positionCount = lineRenderer.positionCount - 1;
-
+        
         if (linePoints.Count >= 3)
         {
             CalculateLine();
@@ -184,6 +197,10 @@ public class SwingingPlayer : MonoBehaviour
         }
         
         lineRenderer.SetPosition(linePoints.Count - 1, transform.position);
+       
+        joint.enabled = true;
+        joint.connectedAnchor = linePoints[linePoints.Count - 2];
+        
     }
 
     private void CalculateLine()
@@ -205,7 +222,11 @@ public class SwingingPlayer : MonoBehaviour
     private void MovePlayer()
     {
         
-        body.velocity = (movementInput * Time.fixedDeltaTime);
+        /*body.velocity = (movementInput * Time.fixedDeltaTime);
+        movementInput = Vector2.zero;*/
+        
+        body.velocity += jumpVelocity + movementInput * Time.deltaTime;
+        jumpVelocity = Vector2.zero;
         movementInput = Vector2.zero;
         
     }
