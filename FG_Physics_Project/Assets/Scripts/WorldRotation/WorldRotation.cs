@@ -30,8 +30,9 @@ public class WorldRotation : MonoBehaviour
         if (timeAccumulator >= gravitySwapCutoff && hasFlipped == false)
         {
             Physics2D.gravity = desiredRotation * Physics.gravity;
+            gravityVector = Physics.gravity;
             hasFlipped = true;
-            player.up = desiredRotation * gravityVector;
+            player.rotation = desiredRotation;
         }
 
         if (timeAccumulator >= 1.0f)

@@ -17,16 +17,11 @@ public class RotatingPlayer : MonoBehaviour
     private float wallDirection;
     private float controlModifier = 1.0f;
 
-    private LineRenderer lineRenderer;
     private bool grounded = false;
     private bool isAttachedToWall = false;
     
     private bool isAttached = false;
-
-    private List<Vector2> linePoints = new List<Vector2>();
-    private Vector2[] line = new Vector2[2];
-    private bool lookForPositive = false;
-    private float currentRopeLength = 0.0f;
+    
 
 
     void Start()
@@ -34,7 +29,6 @@ public class RotatingPlayer : MonoBehaviour
         body = GetComponent<Rigidbody2D>();
         collider = GetComponent<BoxCollider2D>();
         gravityScale = body.gravityScale;
-        lineRenderer = GetComponent<LineRenderer>();
 
     }
     
@@ -49,8 +43,9 @@ public class RotatingPlayer : MonoBehaviour
 
     void TestGrounded()
     {
+        Debug.DrawRay(transform.position, -transform.up * 10, Color.red);
         if (Physics2D.BoxCast(new Vector2(transform.position.x, transform.position.y), collider.size * transform.localScale,
-            0, Vector2.down, 0.3f, LayerMask.GetMask("Default")))
+            0, -transform.up, 0.3f, LayerMask.GetMask("Default")))
         {
             grounded = true;
             return;
@@ -62,19 +57,19 @@ public class RotatingPlayer : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.D))
         {
-            movementInput = Vector2.right * movementSpeed;
+            movementInput = transform.right * movementSpeed;
         }
         else if (Input.GetKey(KeyCode.A))
         {
-            movementInput = -Vector2.right * movementSpeed;
+            movementInput = -transform.right * movementSpeed;
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (grounded || isAttachedToWall)
             {
-                jumpVelocity = Vector2.up * jumpStrength;
-                jumpVelocity += Vector2.right * (-wallDirection * detachStrength);
+                jumpVelocity = transform.up * jumpStrength;
+                jumpVelocity += new Vector2(transform.right.x, transform.right.y) * (-wallDirection * detachStrength);
                 isAttachedToWall = false;
                 wallDirection = 0;
             }
@@ -92,11 +87,13 @@ public class RotatingPlayer : MonoBehaviour
 
     private void TestWallConnection()
     {
+        
+        Debug.DrawRay(transform.position, body.velocity * 10, Color.green);
 
         float direction = wallDirection != 0 ? wallDirection : body.velocity.x;
         RaycastHit2D hit;
         hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y),
-            new Vector2(direction, 0).normalized, 0.3f, LayerMask.GetMask("Default"));
+            (transform.rotation * new Vector2(direction, 0)).normalized, 0.3f, LayerMask.GetMask("Default"));
         if(hit.collider)
         {
             if (wallDirection == 0)
