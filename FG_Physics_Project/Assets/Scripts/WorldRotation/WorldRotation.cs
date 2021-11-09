@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class WorldRotation : MonoBehaviour
@@ -33,6 +34,7 @@ public class WorldRotation : MonoBehaviour
             gravityVector = Physics.gravity;
             hasFlipped = true;
             player.rotation = desiredRotation;
+            player.gameObject.GetComponent<RotatingPlayer>().DetachFromWall();
         }
 
         if (timeAccumulator >= 1.0f)

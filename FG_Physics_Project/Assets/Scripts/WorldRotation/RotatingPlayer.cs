@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,19 +9,21 @@ public class RotatingPlayer : MonoBehaviour
     [SerializeField] private float jumpStrength = 20.0f;
     [SerializeField] private float detachStrength = 30.0f;
     [SerializeField, Range(0.0f, 1.0f)] private float airControl = 0.3f;
+    [SerializeField] private AnimationCurve jumpCurve; // work in progress
 
     private Vector2 movementInput;
     private Vector2 jumpVelocity;
+    private Vector2 wallNormal;
+    private Vector2 movementDirection;
     private BoxCollider2D collider;
     private Rigidbody2D body;
     private float gravityScale;
-    private float wallDirection;
     private float controlModifier = 1.0f;
 
     private bool grounded = false;
     private bool isAttachedToWall = false;
-    
-    private bool isAttached = false;
+    private bool lastInputDirectionWasRight = false;
+    private bool canAttachToWall = true;
     
 
 
@@ -29,16 +32,14 @@ public class RotatingPlayer : MonoBehaviour
         body = GetComponent<Rigidbody2D>();
         collider = GetComponent<BoxCollider2D>();
         gravityScale = body.gravityScale;
-
     }
     
     void Update()
     {
         TestGrounded();
-        TestWallConnection();
         HandleInput();
+        TestWallConnection();
         MovePlayer();
-
     }
 
     void TestGrounded()
@@ -55,13 +56,18 @@ public class RotatingPlayer : MonoBehaviour
     
     private void HandleInput()
     {
-        if (Input.GetKey(KeyCode.D))
+        if (!isAttachedToWall)
         {
-            movementInput = transform.right * movementSpeed;
-        }
-        else if (Input.GetKey(KeyCode.A))
-        {
-            movementInput = -transform.right * movementSpeed;
+            if (Input.GetKey(KeyCode.D))
+            {
+                movementInput = transform.right * movementSpeed;
+                lastInputDirectionWasRight = true;
+            }
+            else if (Input.GetKey(KeyCode.A))
+            {
+                movementInput = -transform.right * movementSpeed;
+                lastInputDirectionWasRight = false;
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -69,17 +75,27 @@ public class RotatingPlayer : MonoBehaviour
             if (grounded || isAttachedToWall)
             {
                 jumpVelocity = transform.up * jumpStrength;
-                jumpVelocity += new Vector2(transform.right.x, transform.right.y) * (-wallDirection * detachStrength);
-                isAttachedToWall = false;
-                wallDirection = 0;
+                jumpVelocity += wallNormal * detachStrength;
+                DetachFromWall();
             }
         }
         Vector2.ClampMagnitude(movementInput, movementSpeed);
     }
 
+    public void DetachFromWall()
+    {
+        isAttachedToWall = false;
+        wallNormal = Vector2.zero;
+        body.gravityScale = gravityScale;
+        movementDirection = Vector2.zero;
+        canAttachToWall = false;
+        StartCoroutine(AttachToWallDelay());
+
+    }
+
     private void MovePlayer()
     {
-        controlModifier = grounded == true ? 1 : airControl;
+        controlModifier = grounded ? 1 : airControl;
         body.velocity += jumpVelocity + movementInput * (Time.deltaTime * controlModifier);
         jumpVelocity = Vector2.zero;
         movementInput = Vector2.zero;
@@ -87,29 +103,34 @@ public class RotatingPlayer : MonoBehaviour
 
     private void TestWallConnection()
     {
-        
-        Debug.DrawRay(transform.position, body.velocity * 10, Color.green);
-
-        float direction = wallDirection != 0 ? wallDirection : body.velocity.x;
-        RaycastHit2D hit;
-        hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y),
-            (transform.rotation * new Vector2(direction, 0)).normalized, 0.3f, LayerMask.GetMask("Default"));
-        if(hit.collider)
+        if (grounded || !canAttachToWall)
         {
-            if (wallDirection == 0)
-            {
-                wallDirection =  body.velocity.x > 0 ? 1 : -1;
-            }
-            body.velocity = new Vector2(body.velocity.x, body.velocity.y * 0.98f);
-            body.gravityScale = 0;
-            isAttachedToWall = true;
             return;
         }
         
-        isAttachedToWall = false;
-        wallDirection = 0;
-        body.gravityScale = gravityScale;
+        movementDirection =  lastInputDirectionWasRight? transform.right : -transform.right;
+        Debug.DrawRay(transform.position,  movementDirection.normalized * 0.4f, Color.green);
+        RaycastHit2D hit;
+        hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y),
+            movementDirection.normalized, 0.4f, LayerMask.GetMask("Default"));
+        
+        if(hit.collider)
+        {
+            wallNormal = hit.normal;
+            body.velocity = new Vector2(body.velocity.x, body.velocity.y) * 0.98f;
+            body.gravityScale = 0;
+            isAttachedToWall = true;
+        }
+       
     }
+
+    private IEnumerator AttachToWallDelay()
+    {
+        yield return new WaitForSeconds(0.2f);
+        canAttachToWall = true;
+    }
+    
+    
 
 
     
