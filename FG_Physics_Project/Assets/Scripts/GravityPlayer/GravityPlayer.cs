@@ -7,10 +7,11 @@ public class GravityPlayer : MonoBehaviour
 {
     [SerializeField] private float movementSpeed = 10.0f;
     [SerializeField] private float circularForce = 5.0f;
+    [SerializeField] private float impulseForce = 500;
     
     private Vector2 movementInput;
     private Rigidbody2D body;
-
+    private bool useGravity = true;
     private List<Rigidbody2D> affectedBodies = new List<Rigidbody2D>();
     
     void Start()
@@ -22,7 +23,10 @@ public class GravityPlayer : MonoBehaviour
     void Update()
     {
         HandleInput();
+        HandleMouseInput();
         MovePlayer();
+        if(useGravity)
+            AffectGravityObjects();
     }
 
     private void AffectGravityObjects()
@@ -30,8 +34,19 @@ public class GravityPlayer : MonoBehaviour
         
         foreach (Rigidbody2D affectedBody in affectedBodies)
         {
-            //create circular motion on objects here
+            Vector2 centripedalForceDirection =
+                (transform.position - affectedBody.gameObject.transform.position).normalized;
+            Vector2 tangetVelocityDirection = GetPerpendicularVelocity(centripedalForceDirection);
+            affectedBody.velocity = body.velocity + tangetVelocityDirection * 1;
+            
+
+
         }
+    }
+
+    private Vector2 GetPerpendicularVelocity(Vector2 vector)
+    {
+        return (new Vector2(vector.y, -vector.x)).normalized;
     }
 
     private void HandleInput()
@@ -53,6 +68,32 @@ public class GravityPlayer : MonoBehaviour
         {
             movementInput += -Vector2.up * movementSpeed;
         }
+    }
+
+    private void HandleMouseInput()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            if(useGravity)
+                EmmitPulse();
+        }
+    }
+
+    private void EmmitPulse()
+    {
+        StartCoroutine(StopGravity());
+        foreach (Rigidbody2D affectedBody in affectedBodies)
+        {
+            Vector2 forceDirection = (affectedBody.transform.position - transform.position).normalized;
+            affectedBody.AddForce(forceDirection * impulseForce);
+        }
+    }
+
+    private IEnumerator StopGravity()
+    {
+        useGravity = false;
+        yield return new WaitForSeconds(1);
+        useGravity = true;
     }
     
     private void MovePlayer()
