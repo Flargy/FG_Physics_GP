@@ -2,6 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum InputDirection
+{
+    Right,
+    Left,
+    None
+}
+
 public class RotatingPlayer : MonoBehaviour
 {
     
@@ -10,6 +17,7 @@ public class RotatingPlayer : MonoBehaviour
     [SerializeField] private float detachStrength = 30.0f;
     [SerializeField, Range(0.0f, 1.0f)] private float airControl = 0.3f;
     [SerializeField] private AnimationCurve jumpCurve; // work in progress
+    [SerializeField] private bool autoAttachOnRotation = false;
 
     private Vector2 movementInput;
     private Vector2 jumpVelocity;
@@ -22,7 +30,7 @@ public class RotatingPlayer : MonoBehaviour
 
     private bool grounded = false;
     private bool isAttachedToWall = false;
-    private bool lastInputDirectionWasRight = false;
+    private InputDirection inputDirection = InputDirection.None;
     private bool canAttachToWall = true;
     
 
@@ -61,12 +69,12 @@ public class RotatingPlayer : MonoBehaviour
             if (Input.GetKey(KeyCode.D))
             {
                 movementInput = transform.right * movementSpeed;
-                lastInputDirectionWasRight = true;
+                inputDirection = InputDirection.Right;
             }
             else if (Input.GetKey(KeyCode.A))
             {
                 movementInput = -transform.right * movementSpeed;
-                lastInputDirectionWasRight = false;
+                inputDirection = InputDirection.Left;
             }
         }
 
@@ -90,6 +98,10 @@ public class RotatingPlayer : MonoBehaviour
         movementDirection = Vector2.zero;
         canAttachToWall = false;
         StartCoroutine(AttachToWallDelay());
+        if (!autoAttachOnRotation)
+        {
+            inputDirection = InputDirection.None;
+        }
 
     }
 
@@ -107,8 +119,20 @@ public class RotatingPlayer : MonoBehaviour
         {
             return;
         }
+
+        if (inputDirection == InputDirection.None)
+        {
+            movementDirection = Vector2.zero;
+        }
+        else if (inputDirection == InputDirection.Right)
+        {
+            movementDirection = transform.right;
+        }
+        else
+        {
+            movementDirection = -transform.right;
+        }
         
-        movementDirection =  lastInputDirectionWasRight? transform.right : -transform.right;
         Debug.DrawRay(transform.position,  movementDirection.normalized * 0.4f, Color.green);
         RaycastHit2D hit;
         hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y),
