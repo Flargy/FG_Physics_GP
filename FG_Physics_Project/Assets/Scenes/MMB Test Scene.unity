@@ -319,6 +319,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 9216052083377159365, guid: fda7555ad55f6254f8ec50bb26aaab11, type: 3}
+      propertyPath: movementSpeed
+      value: 33
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fda7555ad55f6254f8ec50bb26aaab11, type: 3}
 --- !u!1001 &529504051
@@ -606,6 +610,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b0d665332d758b64a835030e61713ba5, type: 3}
+--- !u!4 &1012664520 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4638633683352749217, guid: fda7555ad55f6254f8ec50bb26aaab11, type: 3}
+  m_PrefabInstance: {fileID: 478145943}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1251955042
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -957,10 +966,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fefd041957d73844481efdbb03b7d70f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 0}
-  rotationTime: 15
+  camera: {fileID: 184344600}
+  rotationTime: 1.7
   gravitySwapCutoff: 0.5
-  player: {fileID: 0}
+  rotationDelay: 5
+  player: {fileID: 1012664520}
+  rotationType: 1
 --- !u!4 &1636283788
 Transform:
   m_ObjectHideFlags: 0
