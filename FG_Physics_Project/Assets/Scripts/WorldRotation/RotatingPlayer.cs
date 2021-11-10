@@ -112,7 +112,7 @@ public class RotatingPlayer : MonoBehaviour
         Debug.DrawRay(transform.position,  movementDirection.normalized * 0.4f, Color.green);
         RaycastHit2D hit;
         hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y),
-            movementDirection.normalized, 0.4f, LayerMask.GetMask("Default"));
+            movementDirection.normalized, 0.6f, LayerMask.GetMask("Default"));
         
         if(hit.collider)
         {

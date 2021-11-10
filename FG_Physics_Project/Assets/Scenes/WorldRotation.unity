@@ -139,7 +139,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &115506268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,9 +153,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camera: {fileID: 1630232054}
-  rotationTime: 15
+  rotationTime: 1
   gravitySwapCutoff: 0.5
+  rotationDelay: 3
   player: {fileID: 952278220}
+  rotationType: 2
 --- !u!4 &115506269
 Transform:
   m_ObjectHideFlags: 0
