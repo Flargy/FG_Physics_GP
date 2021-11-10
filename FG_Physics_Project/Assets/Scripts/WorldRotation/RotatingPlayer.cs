@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public enum InputDirection
@@ -17,8 +18,8 @@ public class RotatingPlayer : MonoBehaviour
     [SerializeField, Range(0.0f, 1.0f)] private float airControl = 0.3f;
     [SerializeField] private AnimationCurve jumpCurve; // work in progress
     [SerializeField] private bool autoAttachOnRotation = false;
-    [SerializeField] private float dashDistance = 5.0f;
-    [SerializeField] private float dashTime = 0.5f;
+    [SerializeField] private float dashDistance = 3.0f;
+    [SerializeField] private float dashTime = 0.2f;
 
     private Vector2 movementInput;
     private Vector2 jumpVelocity;
@@ -29,12 +30,19 @@ public class RotatingPlayer : MonoBehaviour
     private float gravityScale;
     private float controlModifier = 1.0f;
     private float raycastLength;
+    private float linearDrag;
+    private float angularDrag;
 
     private bool grounded = false;
     private bool isAttachedToWall = false;
     private InputDirection inputDirection = InputDirection.None;
     private bool canAttachToWall = true;
-    
+    private bool holdingRight = false;
+    private bool holdingLeft = false;
+    private bool holdingUp = false;
+    private bool canDash = true;
+    private bool isDashing = false;
+
 
 
     void Start()
@@ -43,6 +51,8 @@ public class RotatingPlayer : MonoBehaviour
         collider = GetComponent<BoxCollider2D>();
         gravityScale = body.gravityScale;
         raycastLength = collider.bounds.extents.magnitude + 0.01f;
+        linearDrag = body.drag;
+        angularDrag = body.angularDrag;
     }
     
     void Update()
@@ -60,6 +70,7 @@ public class RotatingPlayer : MonoBehaviour
             0, -transform.up, 0.3f, LayerMask.GetMask("Default")))
         {
             grounded = true;
+            RefreshDash();
             return;
         }
         grounded = false;
@@ -67,17 +78,40 @@ public class RotatingPlayer : MonoBehaviour
     
     private void HandleInput()
     {
-        if (!isAttachedToWall)
+        if (!isAttachedToWall && !isDashing)
         {
             if (Input.GetKey(KeyCode.D))
             {
                 movementInput = transform.right * movementSpeed;
                 inputDirection = InputDirection.Right;
+                holdingRight = true;
+                holdingLeft = false;
             }
             else if (Input.GetKey(KeyCode.A))
             {
                 movementInput = -transform.right * movementSpeed;
                 inputDirection = InputDirection.Left;
+                holdingLeft = true;
+                holdingRight = false;
+            }
+            else
+            {
+                holdingRight = false;
+                holdingLeft = false;
+            }
+
+            if (Input.GetKey(KeyCode.W))
+            {
+                holdingUp = true;
+            }
+            else
+            {
+                holdingUp = false;
+            }
+            
+            if (Input.GetKeyDown(KeyCode.K) && !grounded)
+            {
+                Dash();
             }
         }
 
@@ -90,7 +124,47 @@ public class RotatingPlayer : MonoBehaviour
                 DetachFromWall();
             }
         }
+        
         Vector2.ClampMagnitude(movementInput, movementSpeed);
+    }
+
+    private void Dash()
+    {
+        if (!canDash)
+        {
+            return;
+        }
+
+        canDash = false;
+        body.velocity = Vector2.zero;
+        Vector2 dashDirection = Vector2.zero;
+        
+        if (holdingUp)
+            dashDirection += new Vector2(transform.up.x, transform.up.y);
+        if (holdingRight)
+            dashDirection += new Vector2(transform.right.x, transform.right.y);
+        else if(holdingLeft)
+            dashDirection += new Vector2(-transform.right.x, -transform.right.y);
+
+        if (dashDirection == Vector2.zero)
+        {
+            dashDirection = transform.up;
+        }
+
+        isDashing = true;
+        dashDirection.Normalize();
+        body.drag = 0;
+        body.angularDrag = 0;
+
+        float dashVelocity = dashDistance / dashTime;
+        body.velocity = dashDirection * dashVelocity;
+
+        StartCoroutine(DashGravityRoutine());
+    }
+
+    public void RefreshDash()
+    {
+        canDash = true;
     }
 
     public void DetachFromWall()
@@ -105,7 +179,6 @@ public class RotatingPlayer : MonoBehaviour
         {
             inputDirection = InputDirection.None;
         }
-
     }
 
     private void MovePlayer()
@@ -148,7 +221,7 @@ public class RotatingPlayer : MonoBehaviour
             body.gravityScale = 0;
             isAttachedToWall = true;
         }
-        else
+        else if(canDash)
         {
             DetachFromWall();
         }
@@ -160,9 +233,31 @@ public class RotatingPlayer : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         canAttachToWall = true;
     }
-    
-    
 
+    private IEnumerator DashGravityRoutine()
+    {
+        body.gravityScale = 0;
+        float timer = 0;
+        bool abort = false;
 
+        while (timer <= dashTime && abort == false)
+        {
+            yield return null;
+            timer += Time.deltaTime;
+            if (isAttachedToWall)
+            {
+                abort = true;
+            }
+        }
+        body.drag = linearDrag;
+        body.angularDrag = angularDrag;
+        isDashing = false;
+        body.velocity = body.velocity / 2;    
+        if (!abort)
+        {
+            body.gravityScale = gravityScale;
+        }
+        
+    }
     
 }
