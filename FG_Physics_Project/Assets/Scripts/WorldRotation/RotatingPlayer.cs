@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -53,21 +54,39 @@ public class RotatingPlayer : MonoBehaviour
         raycastLength = collider.bounds.extents.magnitude + 0.01f;
         linearDrag = body.drag;
         angularDrag = body.angularDrag;
+        RespawnManager.Instance.RegisterPlayer(this);
     }
     
     void Update()
     {
-        TestGrounded();
         HandleInput();
         TestWallConnection();
+        TestGrounded();
+
+    }
+
+    private void FixedUpdate()
+    {
         MovePlayer();
     }
 
     void TestGrounded()
     {
+        // this works as a safety for avoiding wall collisions being seen as negative
+        if (Physics2D.Raycast(transform.position, -transform.up, collider.bounds.extents.magnitude *1.05f, LayerMask.GetMask("Default")))
+        {
+            grounded = true;
+            RefreshDash();
+            return;
+        }
+        
+        RaycastHit2D hit = Physics2D.BoxCast(new Vector2(transform.position.x, transform.position.y),
+            collider.size * transform.localScale,
+            0, -transform.up, 0.3f, LayerMask.GetMask("Default"));
+        
         Debug.DrawRay(transform.position, -transform.up * 10, Color.red);
-        if (Physics2D.BoxCast(new Vector2(transform.position.x, transform.position.y), collider.size * transform.localScale,
-            0, -transform.up, 0.3f, LayerMask.GetMask("Default")))
+        Vector2 directionToHit = (hit.point - (Vector2)transform.position).normalized;
+        if (hit && Vector2.Dot(directionToHit, -(Vector2)transform.up) > 0.1f)
         {
             grounded = true;
             RefreshDash();
@@ -109,7 +128,7 @@ public class RotatingPlayer : MonoBehaviour
                 holdingUp = false;
             }
             
-            if (Input.GetKeyDown(KeyCode.K) && !grounded)
+            if (Input.GetKeyDown(KeyCode.K) && canDash && !grounded)
             {
                 Dash();
             }
@@ -184,7 +203,7 @@ public class RotatingPlayer : MonoBehaviour
     private void MovePlayer()
     {
         controlModifier = grounded ? 1 : airControl;
-        body.velocity += jumpVelocity + movementInput * (Time.deltaTime * controlModifier);
+        body.velocity += jumpVelocity + movementInput * (Time.fixedDeltaTime * controlModifier);
         jumpVelocity = Vector2.zero;
         movementInput = Vector2.zero;
     }
@@ -211,7 +230,7 @@ public class RotatingPlayer : MonoBehaviour
         
         Debug.DrawRay(transform.position,  movementDirection.normalized * 0.4f, Color.green);
         RaycastHit2D hit;
-        hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y),
+        hit = Physics2D.Raycast(transform.position,
             movementDirection.normalized, raycastLength, LayerMask.GetMask("Default"));
         
         if(hit.collider)
@@ -228,9 +247,16 @@ public class RotatingPlayer : MonoBehaviour
        
     }
 
+    public void Respawn(Vector2 position)
+    {
+        DetachFromWall();
+        transform.position = position;
+        body.velocity = Vector2.zero;
+    }
+
     private IEnumerator AttachToWallDelay()
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.05f);
         canAttachToWall = true;
     }
 
