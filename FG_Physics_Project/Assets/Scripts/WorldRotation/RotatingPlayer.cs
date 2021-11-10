@@ -1,7 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 public enum InputDirection
@@ -136,11 +133,17 @@ public class RotatingPlayer : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (grounded || isAttachedToWall)
+            if (grounded)
             {
                 jumpVelocity = transform.up * jumpStrength;
+                
+            }
+
+            if (isAttachedToWall)
+            {
                 jumpVelocity += wallNormal * detachStrength;
                 DetachFromWall();
+                //add directions here
             }
         }
         
