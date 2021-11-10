@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 4638633683352749216}
   - component: {fileID: 4638633683352749219}
   - component: {fileID: 4638633683352749218}
-  - component: {fileID: 4638633683352749230}
   - component: {fileID: 4638633683352749231}
+  - component: {fileID: 9216052083377159365}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -135,22 +135,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.19, y: 0.19}
   m_EdgeRadius: 0
---- !u!114 &4638633683352749230
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4638633683352749221}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b61e47cbfdeb9644081758501eadedc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  movementSpeed: 40
-  jumpStrength: 20
-  detachStrength: 15
-  airControl: 0.3
 --- !u!120 &4638633683352749231
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -250,3 +234,25 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!114 &9216052083377159365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4638633683352749221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e2c9af9438dfc041bd0755b2c49262d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementSpeed: 10
+  jumpStrength: 20
+  detachStrength: 30
+  airControl: 0.3
+  jumpCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
