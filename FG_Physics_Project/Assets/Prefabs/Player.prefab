@@ -246,10 +246,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e2c9af9438dfc041bd0755b2c49262d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 10
+  movementSpeed: 50
   jumpStrength: 20
-  detachStrength: 30
-  airControl: 0.3
+  detachStrength: 5
+  airControl: 0.6
   jumpCurve:
     serializedVersion: 2
     m_Curve: []
@@ -257,3 +257,5 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   autoAttachOnRotation: 0
+  dashDistance: 3
+  dashTime: 0.2
