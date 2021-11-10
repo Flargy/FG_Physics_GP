@@ -11,13 +11,14 @@ public enum InputDirection
 
 public class RotatingPlayer : MonoBehaviour
 {
-    
     [SerializeField] private float movementSpeed = 10.0f;
     [SerializeField] private float jumpStrength = 20.0f;
     [SerializeField] private float detachStrength = 30.0f;
     [SerializeField, Range(0.0f, 1.0f)] private float airControl = 0.3f;
     [SerializeField] private AnimationCurve jumpCurve; // work in progress
     [SerializeField] private bool autoAttachOnRotation = false;
+    [SerializeField] private float dashDistance = 5.0f;
+    [SerializeField] private float dashTime = 0.5f;
 
     private Vector2 movementInput;
     private Vector2 jumpVelocity;
@@ -27,6 +28,7 @@ public class RotatingPlayer : MonoBehaviour
     private Rigidbody2D body;
     private float gravityScale;
     private float controlModifier = 1.0f;
+    private float raycastLength;
 
     private bool grounded = false;
     private bool isAttachedToWall = false;
@@ -40,6 +42,7 @@ public class RotatingPlayer : MonoBehaviour
         body = GetComponent<Rigidbody2D>();
         collider = GetComponent<BoxCollider2D>();
         gravityScale = body.gravityScale;
+        raycastLength = collider.bounds.extents.magnitude + 0.01f;
     }
     
     void Update()
@@ -136,7 +139,7 @@ public class RotatingPlayer : MonoBehaviour
         Debug.DrawRay(transform.position,  movementDirection.normalized * 0.4f, Color.green);
         RaycastHit2D hit;
         hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y),
-            movementDirection.normalized, 0.3f, LayerMask.GetMask("Default"));
+            movementDirection.normalized, raycastLength, LayerMask.GetMask("Default"));
         
         if(hit.collider)
         {
