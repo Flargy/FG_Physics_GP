@@ -135,12 +135,13 @@ public class RotatingPlayer : MonoBehaviour
         {
             if (grounded || isAttachedToWall)
             {
-                bool goingRight = false;
-                bool goingLeft = false;
+                Vector2 wallInputDirection = Vector2.zero;
                 if (Input.GetKey(KeyCode.D))
-                    goingRight = true;
+                    wallInputDirection = transform.right;
                 else if (Input.GetKey(KeyCode.A))
-                    goingLeft = true;
+                    wallInputDirection = -transform.right;
+                
+                
                 jumpVelocity = transform.up * jumpStrength;
                 jumpVelocity += wallNormal * detachStrength;
                 DetachFromWall();

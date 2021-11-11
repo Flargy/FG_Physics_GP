@@ -72,7 +72,16 @@ public class WorldRotation : MonoBehaviour
                 gravityVector = Physics.gravity;
                 hasFlipped = true;
                 player.rotation = desiredRotation;
-                player.gameObject.GetComponent<RotatingPlayer>().DetachFromWall();
+                RotatingPlayer rotatingPlayer = player.gameObject.GetComponent<RotatingPlayer>();
+                PlayerStateMachine playerStateMachine = player.GetComponent<PlayerStateMachine>();
+                if (playerStateMachine)
+                {
+                    playerStateMachine.WorldRotation();
+                }
+                else
+                {
+                    rotatingPlayer.DetachFromWall();
+                }
             }
             
         }
