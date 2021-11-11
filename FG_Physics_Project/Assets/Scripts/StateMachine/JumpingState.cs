@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Scripting;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "States/JumpingState")]
