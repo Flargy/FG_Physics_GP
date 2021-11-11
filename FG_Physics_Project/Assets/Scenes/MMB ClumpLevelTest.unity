@@ -253,7 +253,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9216052083377159365, guid: fda7555ad55f6254f8ec50bb26aaab11, type: 3}
       propertyPath: airControl
-      value: 0.5
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 9216052083377159365, guid: fda7555ad55f6254f8ec50bb26aaab11, type: 3}
       propertyPath: dashDistance
