@@ -431,7 +431,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 256
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -462,6 +462,18 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
     maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
@@ -2939,18 +2951,18 @@ TextureImporter:
       tileset _1_3: 6701596232856348616
       tileset _1_95: -5057553365151419028
       tileset _1_30: 8295076298142243784
+      tileset _1_72: 1101414281367934446
       tileset _1_21: -7938339475539159015
       tileset _1_45: 4817850780941157411
       tileset _1_70: -1594890439368910810
-      tileset _1_37: -4869654782081947256
+      tileset _1_115: -1720032028461479894
       tileset _1_15: -5618442919765108576
       tileset _1_79: -5471549460204999414
       tileset _1_36: 8830113897718072864
       tileset _1_78: -8394576293281665928
-      tileset _1_72: 1101414281367934446
       tileset _1_51: 3942814488019382295
       tileset _1_48: 3270909674192243740
-      tileset _1_115: -1720032028461479894
+      tileset _1_37: -4869654782081947256
       tileset _1_112: 4356352789781795644
       tileset _1_114: -8770349937169815853
       tileset _1_5: -4504259318959754742

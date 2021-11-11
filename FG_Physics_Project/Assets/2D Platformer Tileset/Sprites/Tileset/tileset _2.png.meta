@@ -401,7 +401,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 256
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -432,6 +432,18 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
     maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
@@ -2934,8 +2946,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      tileset _2_84: -8009906710510552554
       tileset _2_7: -5810255499851940667
-      tileset _2_20: 4860785493227705932
       tileset _2_33: -6111668648337142959
       tileset _2_71: -3237152402397761693
       tileset _2_104: 7753499814846064855
@@ -2957,18 +2969,19 @@ TextureImporter:
       tileset _2_75: -2109543361488278718
       tileset _2_24: -7260789025049042745
       tileset _2_106: -6330319565861500840
-      tileset _2_22: -5296577424571004407
+      tileset _2_116: 2310698006599841358
+      tileset _2_126: 2746322089534376687
       tileset _2_27: 4994890452420828974
+      tileset _2_123: 947095222677820216
       tileset _2_8: 5862887256178493976
       tileset _2_111: -1020028488152975906
+      tileset _2_22: -5296577424571004407
       tileset _2_3: 4721485959824205331
-      tileset _2_116: 2310698006599841358
-      tileset _2_38: 1408589789785093587
       tileset _2_90: -2346808062608826600
+      tileset _2_38: 1408589789785093587
       tileset _2_91: 2337195075528574535
       tileset _2_50: -5624335983900647900
       tileset _2_55: -3009173357783977290
-      tileset _2_123: 947095222677820216
       tileset _2_61: 4872665480012675758
       tileset _2_0: 5433579854117113656
       tileset _2_125: -6386474990719720667
@@ -2979,7 +2992,6 @@ TextureImporter:
       tileset _2_83: -8917150192443262825
       tileset _2_102: -4331701542831370379
       tileset _2_89: 5993808443050992568
-      tileset _2_126: 2746322089534376687
       tileset _2_107: 7008160624563438874
       tileset _2_34: 6205557647196395048
       tileset _2_122: -4715675960588051835
@@ -3016,9 +3028,9 @@ TextureImporter:
       tileset _2_13: 4714074814269936636
       tileset _2_31: -1514861480534428071
       tileset _2_25: 5921029607664421575
+      tileset _2_59: 9198135654123819790
       tileset _2_28: -5382853522512313585
       tileset _2_49: 220826287919102640
-      tileset _2_59: 9198135654123819790
       tileset _2_101: 8719063961456648624
       tileset _2_124: 5411031838619323887
       tileset _2_60: 5095184126178297479
@@ -3048,10 +3060,10 @@ TextureImporter:
       tileset _2_70: 4432821124349656710
       tileset _2_103: 3825786010569055062
       tileset _2_21: -2108920981453744252
-      tileset _2_39: 1504610771988267422
-      tileset _2_84: -8009906710510552554
-      tileset _2_63: -503555812289504544
       tileset _2_65: 8137407726249956986
+      tileset _2_39: 1504610771988267422
+      tileset _2_63: -503555812289504544
+      tileset _2_20: 4860785493227705932
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
