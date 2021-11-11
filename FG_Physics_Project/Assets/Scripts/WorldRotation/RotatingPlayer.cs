@@ -133,17 +133,18 @@ public class RotatingPlayer : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (grounded)
+            if (grounded || isAttachedToWall)
             {
+                bool goingRight = false;
+                bool goingLeft = false;
+                if (Input.GetKey(KeyCode.D))
+                    goingRight = true;
+                else if (Input.GetKey(KeyCode.A))
+                    goingLeft = true;
                 jumpVelocity = transform.up * jumpStrength;
-                
-            }
-
-            if (isAttachedToWall)
-            {
                 jumpVelocity += wallNormal * detachStrength;
                 DetachFromWall();
-                //add directions here
+
             }
         }
         
