@@ -12,7 +12,7 @@ public class RespawnManager : MonoBehaviour
         get { return instance; }
     }
 
-    private RotatingPlayer player;
+    private PlayerStateMachine player;
 
     private void Awake()
     {
@@ -22,10 +22,11 @@ public class RespawnManager : MonoBehaviour
         }
     }
 
-    public void RegisterPlayer(RotatingPlayer p)
+    public void RegisterPlayer(PlayerStateMachine p)
     {
         player = p;
     }
+    
 
     public void Respawn()
     {

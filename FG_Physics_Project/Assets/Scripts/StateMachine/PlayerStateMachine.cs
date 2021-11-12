@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public enum StateMovementDiraction
@@ -23,6 +24,11 @@ public class PlayerStateMachine : MonoBehaviour
         myStateMachine.SetUpStateMashine(this, body);
     }
 
+    private void Start()
+    {
+        RespawnManager.Instance.RegisterPlayer(this);
+    }
+
     private void Update()
     {
         myStateMachine.UpdateStateMachine();
@@ -35,6 +41,12 @@ public class PlayerStateMachine : MonoBehaviour
 
     public void WorldRotation()
     {
+        myStateMachine.ChangeState(StateEnums.FALLING);
+    }
+
+    public void Respawn(Vector2 pos)
+    {
+        transform.position = pos;
         myStateMachine.ChangeState(StateEnums.FALLING);
     }
 }

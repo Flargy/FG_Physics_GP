@@ -51,7 +51,7 @@ public class RotatingPlayer : MonoBehaviour
         raycastLength = collider.bounds.extents.magnitude + 0.01f;
         linearDrag = body.drag;
         angularDrag = body.angularDrag;
-        RespawnManager.Instance.RegisterPlayer(this);
+        //RespawnManager.Instance.RegisterPlayer(this);
     }
     
     void Update()
