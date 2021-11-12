@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StateName: 1
   airMovementSpeed: 5
-  jumpStrength: 15
+  jumpStrength: 22

@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: DashState
   m_EditorClassIdentifier: 
   StateName: 5
+  dashDuration: 0.2
+  dashDistance: 4

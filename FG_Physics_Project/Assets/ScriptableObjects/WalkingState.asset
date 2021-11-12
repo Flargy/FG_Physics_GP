@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: WalkingState
   m_EditorClassIdentifier: 
   StateName: 0
-  movementSpeed: 40
+  movementSpeed: 64
