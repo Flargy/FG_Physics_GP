@@ -21,7 +21,7 @@ public class FallingState : BaseState
         body = NewOwner.GetPlayerRB();
         bodyTransform = body.transform;
         collider = body.gameObject.GetComponent<BoxCollider2D>();
-        player = Owner.GetPlayer();
+        player = (PlayerStateMachine)Owner.GetPlayer();
         raycastLength = collider.bounds.extents.magnitude + 0.01f;
 
     }

@@ -5,11 +5,9 @@ public class CameraMovement : MonoBehaviour
 {
     
     /*
-     * Things that are needed
-     * a top, bottom, right and left markers that the camera wont be able to pass
-     * a smoothing of movement dependant on the players position relative to the camera center
-     * the marker points will need to follow the cameras rotation to make sure the aspect ration remains consistent
-     * the marker points could be children to the background to ensure they rotate with the camera without moving with it
+     * The current problem is that the calculations in this doesnt take the rotation into account
+     * vertical and horizontal swaps position with 90 degree turns
+     * 
      */
 
     [SerializeField] private Transform playerTransform;
@@ -39,7 +37,6 @@ public class CameraMovement : MonoBehaviour
     {
         camera = GetComponent<Camera>();
         cameraZ = transform.position.z;
-        Debug.Log(camera.ScreenToWorldPoint(new Vector3(1, 0.5f, 0)).x);
     }
 
     void LateUpdate()

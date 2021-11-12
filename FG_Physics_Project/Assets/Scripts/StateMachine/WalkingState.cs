@@ -17,13 +17,13 @@ public class WalkingState : BaseState
         body = NewOwner.GetPlayerRB();
         bodyTransform = body.transform;
         collider = body.gameObject.GetComponent<BoxCollider2D>();
-        player = Owner.GetPlayer();
+        player = (PlayerStateMachine)Owner.GetPlayer();
         player.baseGravity = body.gravityScale;
     }
 
     public override void OnEnter()
     {
-        Owner.GetPlayer().canDash = true;
+        ((PlayerStateMachine)Owner.GetPlayer()).canDash = true;
         if (body == null)
         {
             body = Owner.GetPlayerRB();

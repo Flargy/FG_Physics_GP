@@ -18,6 +18,7 @@ public class WorldRotation : MonoBehaviour
     [SerializeField] private float rotationDelay = 5.0f;
     [SerializeField] private Transform player;
     [SerializeField] private RotationType rotationType = RotationType.FullRotation;
+    [SerializeField] private Transform background;
     
      private Quaternion rotationDegrees = new Quaternion(0, 0, 0.7071f, 0.7071f);
      private Quaternion negativeRotationDegrees = new Quaternion(0, 0, -0.7071f, 0.7071f);
@@ -62,7 +63,7 @@ public class WorldRotation : MonoBehaviour
             rotation += Time.deltaTime / rotationTime;
             
             camera.rotation = Quaternion.Slerp(previousRotation, desiredRotation, rotation);
-
+            //background.rotation = Quaternion.Slerp(previousRotation, desiredRotation, rotation);
 
             if (rotation >= gravitySwapCutoff && hasFlipped == false)
             {
@@ -106,12 +107,10 @@ public class WorldRotation : MonoBehaviour
             }
             else if (goPositive)
             {
-                Debug.Log("positive");
                 desiredRotation = desiredRotation * rotationDegrees;
             }
             else
             {
-                Debug.Log("negative");
                 desiredRotation = desiredRotation * negativeRotationDegrees;
             }
 

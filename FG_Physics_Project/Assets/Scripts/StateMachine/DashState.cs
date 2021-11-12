@@ -19,7 +19,7 @@ public class DashState : BaseState
     {
         Owner = NewOwner;
         body = NewOwner.GetPlayerRB();
-        player = Owner.GetPlayer();
+        player = (PlayerStateMachine)Owner.GetPlayer();
         bodyTransform = player.gameObject.GetComponent<Transform>();
         collider = body.gameObject.GetComponent<BoxCollider2D>();
         raycastLength = collider.bounds.extents.magnitude + 0.01f;

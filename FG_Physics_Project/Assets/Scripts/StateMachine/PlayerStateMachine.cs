@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public enum StateMovementDiraction
@@ -8,7 +7,7 @@ public enum StateMovementDiraction
     NONE
 }
 
-public class PlayerStateMachine : MonoBehaviour
+public class PlayerStateMachine : StateMachineBase
 {
     [SerializeField] private StateMachine myStateMachine;
     [HideInInspector] public Vector2 wallNormal;

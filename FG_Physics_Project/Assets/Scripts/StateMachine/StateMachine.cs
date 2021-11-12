@@ -16,10 +16,10 @@ public enum StateEnums
 public class StateMachine : ScriptableObject
 {
     [SerializeField] private List<BaseState> MyStates;
-    private PlayerStateMachine Player;
+    private StateMachineBase Player;
     private Rigidbody2D PlayerRB;
     
-        public PlayerStateMachine GetPlayer()
+        public StateMachineBase GetPlayer()
     {
         return Player;
     }
@@ -30,7 +30,7 @@ public class StateMachine : ScriptableObject
     private BaseState CurrentState = null;
     private BaseState PreviousState = null;
 
-    public void SetUpStateMashine(PlayerStateMachine NewPlayer, Rigidbody2D NewPlayerRB)
+    public void SetUpStateMashine(StateMachineBase NewPlayer, Rigidbody2D NewPlayerRB)
     {
         Player = NewPlayer;
         PlayerRB = NewPlayerRB;
