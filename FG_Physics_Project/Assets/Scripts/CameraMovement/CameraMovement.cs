@@ -43,5 +43,7 @@ public class CameraMovement : MonoBehaviour
             Debug.Log("player near vertical");
         }
         // this works. just fix a movement smoothing with a maximum allowed movement area for vertical and horizontal movement
+        
+        
     }
 }
