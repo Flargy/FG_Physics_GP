@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4638633683352749219}
   - component: {fileID: 4638633683352749218}
   - component: {fileID: 4638633683352749231}
-  - component: {fileID: 9216052083377159365}
+  - component: {fileID: -6577985355823179373}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -234,7 +234,7 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
---- !u!114 &9216052083377159365
+--- !u!114 &-6577985355823179373
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -243,19 +243,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 4638633683352749221}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e2c9af9438dfc041bd0755b2c49262d, type: 3}
+  m_Script: {fileID: 11500000, guid: 01542087185630b47b4cd1a155aee30e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 50
-  jumpStrength: 20
-  detachStrength: 5
-  airControl: 0.6
-  jumpCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  autoAttachOnRotation: 0
-  dashDistance: 3
-  dashTime: 0.2
+  myStateMachine: {fileID: 11400000, guid: f0e1af09efb82834dbf50f9ee1665230, type: 2}
+  wallNormal: {x: 0, y: 0}
+  canDash: 1
+  direction: 2
+  baseGravity: 0
+  wallInputDirection: {x: 0, y: 0}
