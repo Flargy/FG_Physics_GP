@@ -6,6 +6,7 @@ public class JumpingState : BaseState
     [SerializeField] private float airMovementSpeed = 5.0f;
     [SerializeField] private float jumpStrength = 15.0f;
     [SerializeField] private float jumpHorizontalBoost = 5.0f;
+    [SerializeField] private bool attachDuringJump = false;
     
     private Vector2 movementInput = Vector2.zero;
     private BoxCollider2D collider;
@@ -49,8 +50,8 @@ public class JumpingState : BaseState
             Owner.ChangeState(StateEnums.FALLING);
         }
         HandleInput();
-
-        if (ConnectedWithWall())
+        
+        if (attachDuringJump && ConnectedWithWall())
         {
             Owner.ChangeState(StateEnums.WALLCLIMBING);
         }
