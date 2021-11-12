@@ -47,6 +47,7 @@ public class PlayerStateMachine : MonoBehaviour
     public void Respawn(Vector2 pos)
     {
         transform.position = pos;
+        body.velocity = Vector2.zero;
         myStateMachine.ChangeState(StateEnums.FALLING);
     }
 }

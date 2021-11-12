@@ -5,6 +5,7 @@ public class JumpingState : BaseState
 {
     [SerializeField] private float airMovementSpeed = 5.0f;
     [SerializeField] private float jumpStrength = 15.0f;
+    [SerializeField] private float jumpHorizontalBoost = 5.0f;
     
     private Vector2 movementInput = Vector2.zero;
     private BoxCollider2D collider;
@@ -23,11 +24,20 @@ public class JumpingState : BaseState
         collider = body.gameObject.GetComponent<BoxCollider2D>();
         player = Owner.GetPlayer();
         raycastLength = collider.bounds.extents.magnitude + 0.01f;
-
     }
 
     public override void OnEnter()
     {
+        float direction = Vector2.Dot(body.velocity.normalized, bodyTransform.right);
+        if (direction > 0.1f)
+        {
+            body.velocity += (Vector2) bodyTransform.right * jumpHorizontalBoost;
+        }
+        else if (direction < -0.1)
+        {
+            body.velocity += -(Vector2)bodyTransform.right * jumpHorizontalBoost;
+
+        }
         body.velocity += (Vector2)bodyTransform.up * jumpStrength;
     }
 

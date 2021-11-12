@@ -25,7 +25,6 @@ public class WorldRotation : MonoBehaviour
      private Quaternion desiredRotation = Quaternion.identity;
      private Quaternion previousRotation = Quaternion.identity;
      private float timeAccumulator = 0.0f;
-     private Vector3 gravityVector = Vector3.down;
      private bool hasFlipped = false;
 
      private bool isRotating = false;
@@ -68,7 +67,6 @@ public class WorldRotation : MonoBehaviour
             if (rotation >= gravitySwapCutoff && hasFlipped == false)
             {
                 Physics2D.gravity = desiredRotation * Physics.gravity;
-                gravityVector = Physics.gravity;
                 hasFlipped = true;
                 player.rotation = desiredRotation;
                 RotatingPlayer rotatingPlayer = player.gameObject.GetComponent<RotatingPlayer>();
