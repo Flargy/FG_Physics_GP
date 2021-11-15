@@ -1,6 +1,8 @@
 
+using System;
 using UnityEngine;
 
+[RequireComponent(typeof(Collider2D))]
 public class RespawnManager : MonoBehaviour
 {
     [SerializeField] private Transform respawnPoint;
@@ -31,5 +33,13 @@ public class RespawnManager : MonoBehaviour
     public void Respawn()
     {
         player.Respawn(respawnPoint.position);
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            Respawn();
+        }
     }
 }
