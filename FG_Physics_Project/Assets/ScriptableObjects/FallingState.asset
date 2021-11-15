@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: FallingState
   m_EditorClassIdentifier: 
   StateName: 2
-  fallingMoveSpeed: 10
+  fallingMoveSpeed: 20
   gravityAcceleration: 1.5
   maxVelocity: 20
