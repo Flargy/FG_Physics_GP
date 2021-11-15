@@ -5,7 +5,8 @@ public class JumpingState : BaseState
 {
     [SerializeField] private float airMovementSpeed = 5.0f;
     [SerializeField] private float jumpStrength = 15.0f;
-    [SerializeField] private float jumpHoldAddition = 7.0f;
+    [SerializeField] private float jumpHoldAdditionalStrength = 7.0f;
+    [SerializeField] private float secondsForHighJump = 0.15f;
     [SerializeField] private float jumpHorizontalBoost = 5.0f;
     [SerializeField] private bool attachDuringJump = false;
     
@@ -16,6 +17,8 @@ public class JumpingState : BaseState
     private PlayerStateMachine player;
 
     private float raycastLength;
+    private float extraJumpTimer = 0.0f;
+    private bool jumpFinished = false;
 
     
     public override void Initialize(StateMachine NewOwner)
@@ -30,6 +33,7 @@ public class JumpingState : BaseState
 
     public override void OnEnter()
     {
+
         float direction = Vector2.Dot(body.velocity.normalized, bodyTransform.right);
         if (direction > 0.1f)
         {
@@ -45,6 +49,13 @@ public class JumpingState : BaseState
 
     public override void OnUpdate()
     {
+        extraJumpTimer += Time.deltaTime;
+        if (extraJumpTimer >= secondsForHighJump && jumpFinished == false && Input.GetKey(KeyCode.Space))
+        {
+            body.velocity += (Vector2)bodyTransform.up * jumpHoldAdditionalStrength;
+            jumpFinished = true;
+        }
+        
         float direction = Vector2.Dot(body.velocity, (Vector2)bodyTransform.up);
         if (direction <= 0.0f)
         {
@@ -65,6 +76,8 @@ public class JumpingState : BaseState
 
     public override void OnExit()
     {
+        jumpFinished = false;
+        extraJumpTimer = 0.0f;
     }
 
     private void HandleInput()
