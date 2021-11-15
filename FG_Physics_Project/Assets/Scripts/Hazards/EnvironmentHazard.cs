@@ -7,7 +7,15 @@ public class EnvironmentHazard : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            RespawnManager.Instance.Respawn();
+            Vector2 playerVelocity = other.gameObject.GetComponent<Rigidbody2D>().velocity;
+
+            float dotValue = Vector2.Dot(transform.up, playerVelocity);
+
+            if (dotValue < 0.7f)
+            {
+                RespawnManager.Instance.Respawn();
+            }
+            
         }
     }
 }
