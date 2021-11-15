@@ -15,7 +15,7 @@ MonoBehaviour:
   StateName: 1
   airMovementSpeed: 20
   jumpStrength: 30
-  jumpHoldAdditionalStrength: 15
-  secondsForHighJump: 0.25
   jumpHorizontalBoost: 5
   attachDuringJump: 0
+  highJumpGravityValue: 0.1
+  highJumpDuration: 0.5
