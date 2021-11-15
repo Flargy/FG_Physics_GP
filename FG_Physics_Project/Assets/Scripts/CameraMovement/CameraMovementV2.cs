@@ -7,6 +7,7 @@ public class CameraMovementV2 : MonoBehaviour
     
     [SerializeField] private Transform playerTransform;
     [SerializeField] private float smoothingSpeed = 0.3f;
+    [SerializeField, Range(0.1f, 0.9f)] private float movementRange = 0.3f;
     
     private Camera camera;
     private Vector2 playerScreenPosition;
@@ -21,10 +22,10 @@ public class CameraMovementV2 : MonoBehaviour
     void Update()
     {
         playerScreenPosition = camera.WorldToViewportPoint(playerTransform.position);
-        bool playerNearEdge = playerScreenPosition.x < 0.3f 
-                              || playerScreenPosition.x > 0.7f
-                              || playerScreenPosition.y < 0.3f 
-                              || playerScreenPosition.y > 0.7f;
+        bool playerNearEdge = playerScreenPosition.x < 0 + movementRange
+                              || playerScreenPosition.x > 1 - movementRange
+                              || playerScreenPosition.y < 0 + movementRange
+                              || playerScreenPosition.y > 1 - movementRange;
 
         if (playerNearEdge)
         {
