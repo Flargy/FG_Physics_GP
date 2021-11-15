@@ -28,12 +28,16 @@ public class WalkingState : BaseState
         {
             body = Owner.GetPlayerRB();
         }
+        player.anim.SetFloat("GroundVelocity", body.velocity.magnitude);
 
     }
 
     public override void OnUpdate()
     {
         HandleInput();
+        ControlDirection();
+        player.anim.SetFloat("GroundVelocity", body.velocity.magnitude);
+        player.anim.SetBool("IsWalking", true);
         if (!IsGrounded())
         {
             Owner.ChangeState(StateEnums.FALLING);
@@ -47,6 +51,8 @@ public class WalkingState : BaseState
 
     public override void OnExit()
     {
+        player.anim.SetFloat("GroundVelocity", 0);
+        player.anim.SetBool("IsWalking", false);
     }
 
     private void HandleInput()
@@ -89,8 +95,9 @@ public class WalkingState : BaseState
             return true;
         }
         RaycastHit2D hit = Physics2D.BoxCast(bodyTransform.position,
-            collider.size * (bodyTransform.localScale + Vector3.one * 0.05f),
-            0, -bodyTransform.up, 0.05f, LayerMask.GetMask("Default"));
+            collider.bounds.extents * 2,
+            0, -bodyTransform.up,
+            0.3f, LayerMask.GetMask("Default"));
         
         Vector2 directionToHit = (hit.point - (Vector2)bodyTransform.position).normalized;
         if (hit && Vector2.Dot(directionToHit, -(Vector2)bodyTransform.up) > 0.1f)
@@ -99,5 +106,22 @@ public class WalkingState : BaseState
         }
 
         return false;
+    }
+
+    private void ControlDirection()
+    {
+        if (movementInput == Vector2.zero)
+        {
+            return;
+        }
+        float dotValue = Vector2.Dot(bodyTransform.right, body.velocity);
+        if (dotValue > 0)
+        {
+            player.FaceRight(true);
+        }
+        else
+        {
+            player.FaceRight(false);
+        }
     }
 }

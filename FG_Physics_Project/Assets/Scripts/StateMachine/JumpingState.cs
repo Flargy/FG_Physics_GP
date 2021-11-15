@@ -33,7 +33,7 @@ public class JumpingState : BaseState
 
     public override void OnEnter()
     {
-
+        player.anim.SetBool("IsJumping", true);
         float direction = Vector2.Dot(body.velocity.normalized, bodyTransform.right);
         if (direction > 0.1f)
         {
@@ -49,6 +49,7 @@ public class JumpingState : BaseState
 
     public override void OnUpdate()
     {
+        ControlDirection();
         extraJumpTimer += Time.deltaTime;
         if (extraJumpTimer >= secondsForHighJump && jumpFinished == false && Input.GetKey(KeyCode.Space))
         {
@@ -76,6 +77,7 @@ public class JumpingState : BaseState
 
     public override void OnExit()
     {
+        player.anim.SetBool("IsJumping", false);
         jumpFinished = false;
         extraJumpTimer = 0.0f;
     }
@@ -138,6 +140,22 @@ public class JumpingState : BaseState
         }
 
         return false;
-
+    }
+    
+    private void ControlDirection()
+    {
+        if (movementInput == Vector2.zero)
+        {
+            return;
+        }
+        float dotValue = Vector2.Dot(bodyTransform.right, body.velocity);
+        if (dotValue > 0)
+        {
+            player.FaceRight(true);
+        }
+        else
+        {
+            player.FaceRight(false);
+        }
     }
 }

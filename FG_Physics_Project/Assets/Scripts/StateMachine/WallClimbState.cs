@@ -23,8 +23,10 @@ public class WallClimbState : BaseState
 
     public override void OnEnter()
     {
+        player.anim.SetBool("IsWallClimbing", true);
         body.gravityScale = 0.0f;
         player.canDash = true;
+        ControlDirection();
     }
 
     public override void OnUpdate()
@@ -45,6 +47,7 @@ public class WallClimbState : BaseState
 
     public override void OnExit()
     {
+        player.anim.SetBool("IsWallClimbing", false);
         body.gravityScale = player.baseGravity;
     }
 
@@ -96,5 +99,18 @@ public class WallClimbState : BaseState
 
         return false;
 
+    }
+    
+    private void ControlDirection()
+    {
+        float dotValue = Vector2.Dot(bodyTransform.right, player.wallNormal);
+        if (dotValue > 0)
+        {
+            player.FaceRight(true);
+        }
+        else
+        {
+            player.FaceRight(false);
+        }
     }
 }

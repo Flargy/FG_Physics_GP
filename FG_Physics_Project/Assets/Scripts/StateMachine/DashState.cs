@@ -27,12 +27,14 @@ public class DashState : BaseState
 
     public override void OnEnter()
     {
+        player.anim.SetBool("IsDashing", true);
         body.gravityScale = 0;
         linearDrag = body.drag;
         body.drag = 0.0f;
         player.canDash = false;
         body.velocity = Vector2.zero;
         CalculateDashValues();
+        ControlDirection();
     }
 
     public override void OnUpdate()
@@ -51,6 +53,7 @@ public class DashState : BaseState
 
     public override void OnExit()
     {
+        player.anim.SetBool("IsDashing", false);
         body.gravityScale = player.baseGravity;
         body.drag = linearDrag;
         timeAccumulator = 0.0f;
@@ -74,6 +77,10 @@ public class DashState : BaseState
             dashDirection += (Vector2) bodyTransform.up;
         }
         dashDirection.Normalize();
+        if (dashDirection == Vector2.zero)
+        {
+            dashDirection += (Vector2) bodyTransform.up;
+        }
 
         float dashVelocity = dashDistance / dashDuration;
         body.velocity = dashDirection * dashVelocity;
@@ -118,5 +125,19 @@ public class DashState : BaseState
         }
 
         return false;
+    }
+    
+    private void ControlDirection()
+    {
+        
+        float dotValue = Vector2.Dot(bodyTransform.right, body.velocity);
+        if (dotValue > 0)
+        {
+            player.FaceRight(true);
+        }
+        else
+        {
+            player.FaceRight(false);
+        }
     }
 }

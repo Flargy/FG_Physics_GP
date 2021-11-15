@@ -27,6 +27,8 @@ public class WallJumpingState : BaseState
 
     public override void OnEnter()
     {
+        player.anim.SetBool("IsJumping", true);
+
         Vector2 jumpVelocity;
         if (Vector2.Dot(player.wallInputDirection, player.wallNormal) < 0.8f)
         {
@@ -43,7 +45,7 @@ public class WallJumpingState : BaseState
     public override void OnUpdate()
     {
         float direction = Vector2.Dot(body.velocity, (Vector2)bodyTransform.up);
-        
+        ControlDirection();
         HandleInput();
         
         if (ConnectedWithWall())
@@ -64,6 +66,7 @@ public class WallJumpingState : BaseState
 
     public override void OnExit()
     {
+        player.anim.SetBool("IsJumping", false);
     }
     
     private void MovePlayer()
@@ -123,4 +126,22 @@ public class WallJumpingState : BaseState
 
         return false;
     }
+    private void ControlDirection()
+    {
+        if (movementInput == Vector2.zero)
+        {
+            return;
+        }
+        float dotValue = Vector2.Dot(bodyTransform.right, body.velocity);
+        if (dotValue > 0)
+        {
+            player.FaceRight(true);
+        }
+        else
+        {
+            player.FaceRight(false);
+        }
+    }
+    
+    
 }

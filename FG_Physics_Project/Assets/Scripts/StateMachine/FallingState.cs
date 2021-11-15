@@ -28,14 +28,16 @@ public class FallingState : BaseState
 
     public override void OnEnter()
     {
+        player.anim.SetBool("IsFalling", true);
         body.gravityScale *= gravityAcceleration;
     }
 
     public override void OnUpdate()
     {
         HandleInput();
+        ControlDirection();
         float direction = Vector2.Dot(body.velocity, (Vector2)bodyTransform.up);
-
+        
         if (ConnectedWithWall())
         {
             Owner.ChangeState(StateEnums.WALLCLIMBING);
@@ -54,6 +56,7 @@ public class FallingState : BaseState
 
     public override void OnExit()
     {
+        player.anim.SetBool("IsFalling", false);
         body.gravityScale = player.baseGravity;
     }
     
@@ -94,18 +97,23 @@ public class FallingState : BaseState
             return true;
         }
         RaycastHit2D hit = Physics2D.BoxCast(bodyTransform.position,
-            collider.size * (bodyTransform.localScale + Vector3.one * 0.05f),
-            0, -bodyTransform.up, 0.05f, LayerMask.GetMask("Default"));
+            collider.bounds.extents * 2,
+            0, -bodyTransform.up,
+            0.3f, LayerMask.GetMask("Default"));
         
-        Vector2 directionToHit = (hit.point - (Vector2)bodyTransform.position).normalized;
-        if (hit && Vector2.Dot(directionToHit, -(Vector2)bodyTransform.up) > 0.1f)
+        player.DrawCube(bodyTransform.position, collider.bounds.extents * 2); 
+        
+        if (hit)
         {
+            Debug.Log("hit");
             return true;
         }
 
         return false;
     }
-    
+
+   
+
     private bool ConnectedWithWall()
     {
         Vector2 movementDirection;
@@ -135,5 +143,22 @@ public class FallingState : BaseState
 
         return false;
 
+    }
+    
+    private void ControlDirection()
+    {
+        if (movementInput == Vector2.zero)
+        {
+            return;
+        }
+        float dotValue = Vector2.Dot(bodyTransform.right, body.velocity);
+        if (dotValue > 0)
+        {
+            player.FaceRight(true);
+        }
+        else
+        {
+            player.FaceRight(false);
+        }
     }
 }
