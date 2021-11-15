@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StateName: 4
   noInputHorizontalStrength: 12
-  withInputHorizontalStrength: 25
-  withInputVerticalStrength: 15
+  withInputHorizontalStrength: 30
+  withInputVerticalStrength: 25
   wallJumpInputSpeed: 5
