@@ -24,6 +24,7 @@ public class WallClimbState : BaseState
     public override void OnEnter()
     {
         body.gravityScale = 0.0f;
+        player.canDash = true;
     }
 
     public override void OnUpdate()
