@@ -97,7 +97,7 @@ public class WalkingState : BaseState
         RaycastHit2D hit = Physics2D.BoxCast(bodyTransform.position,
             collider.bounds.extents * 2,
             0, -bodyTransform.up,
-            0.3f, LayerMask.GetMask("Default"));
+            0.05f, LayerMask.GetMask("Default"));
         
         Vector2 directionToHit = (hit.point - (Vector2)bodyTransform.position).normalized;
         if (hit && Vector2.Dot(directionToHit, -(Vector2)bodyTransform.up) > 0.1f)
