@@ -105,7 +105,6 @@ public class FallingState : BaseState
         
         if (hit)
         {
-            Debug.Log("hit");
             return true;
         }
 
