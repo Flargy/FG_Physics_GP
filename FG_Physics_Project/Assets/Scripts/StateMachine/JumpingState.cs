@@ -20,7 +20,6 @@ public class JumpingState : BaseState
     private float raycastLength;
     private float extraJumpTimer = 0.0f;
     private bool jumpFinished = false;
-    private int frameCounter = 0;
 
     
     public override void Initialize(StateMachine NewOwner)
@@ -58,7 +57,6 @@ public class JumpingState : BaseState
         
         if (extraJumpTimer >= highJumpDuration && jumpFinished == false || !Input.GetKey(KeyCode.Space) && jumpFinished == false)
         {
-            Debug.Log("high jump ended");
             body.gravityScale = player.baseGravity;
             body.drag = player.drag;
             jumpFinished = true;
@@ -70,6 +68,7 @@ public class JumpingState : BaseState
         float direction = Vector2.Dot(body.velocity, (Vector2)bodyTransform.up);
         if (direction <= 0.0f)
         {
+            Debug.Log("swap to falling");
             Owner.ChangeState(StateEnums.FALLING);
         }
         HandleInput();
@@ -92,7 +91,6 @@ public class JumpingState : BaseState
         body.gravityScale = player.baseGravity;
         body.drag = player.drag;
         extraJumpTimer = 0.0f;
-        frameCounter = 0;
     }
 
     private void HandleInput()

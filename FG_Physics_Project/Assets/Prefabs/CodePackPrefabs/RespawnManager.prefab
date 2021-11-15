@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1731785396634717867}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: RespawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 1837497739441996869}
   - component: {fileID: 1837497739441996870}
   - component: {fileID: 8637930696958223868}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: RespawnManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
