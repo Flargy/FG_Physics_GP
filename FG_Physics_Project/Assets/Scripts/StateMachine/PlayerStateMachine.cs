@@ -17,6 +17,7 @@ public class PlayerStateMachine : StateMachineBase
     [HideInInspector] public float baseGravity;
     [HideInInspector] public Vector2 wallInputDirection;
     [HideInInspector] public Animator anim;
+    [HideInInspector] public float drag;
     private Rigidbody2D body;
     private float xScale;
 
@@ -27,6 +28,7 @@ public class PlayerStateMachine : StateMachineBase
     {
         body = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        drag = body.drag;
         xScale = transform.localScale.y;
         myStateMachine.SetUpStateMashine(this, body);
     }

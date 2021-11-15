@@ -9,6 +9,7 @@ public class JumpingState : BaseState
     [SerializeField] private bool attachDuringJump = false;
     [SerializeField] private float highJumpGravityValue = 0.5f;
     [SerializeField] private float highJumpDuration = 0.2f;
+    [SerializeField] private float highJumpAirFriction = 1.5f;
     
     private Vector2 movementInput = Vector2.zero;
     private BoxCollider2D collider;
@@ -34,6 +35,7 @@ public class JumpingState : BaseState
 
     public override void OnEnter()
     {
+        body.drag = highJumpAirFriction;
         body.gravityScale = highJumpGravityValue;
         player.anim.SetBool("IsJumping", true);
         float direction = Vector2.Dot(body.velocity.normalized, bodyTransform.right);
@@ -58,6 +60,7 @@ public class JumpingState : BaseState
         {
             Debug.Log("high jump ended");
             body.gravityScale = player.baseGravity;
+            body.drag = player.drag;
             jumpFinished = true;
         }
        
@@ -86,6 +89,8 @@ public class JumpingState : BaseState
     {
         player.anim.SetBool("IsJumping", false);
         jumpFinished = false;
+        body.gravityScale = player.baseGravity;
+        body.drag = player.drag;
         extraJumpTimer = 0.0f;
         frameCounter = 0;
     }
