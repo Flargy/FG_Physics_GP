@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c0f382626f19014eab250a248257f62, type: 3}
   m_Name: StickyEnemyDeathState
   m_EditorClassIdentifier: 
-  StateName: 0
+  StateName: 6
   deathTime: 1
