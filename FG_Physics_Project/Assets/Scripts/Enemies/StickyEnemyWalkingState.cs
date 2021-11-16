@@ -1,14 +1,14 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "States/Enemy/NormalWalkingState")]
-public class NormalEnemyWalkingState : BaseState
+[CreateAssetMenu(menuName = "States/Enemy/StickyWalkingState")]
+public class StickyEnemyWalkingState : BaseState
 {
-    [SerializeField] private float movementSpeed = 5.0f;
+    [SerializeField] private float movementSpeed = 2.5f;
     
     private Rigidbody2D body;
     private Transform bodyTransform;
     private BoxCollider2D collider;
-    private NormalEnemyStateMachine actor;
+    private StickyEnemyStateMachine actor;
 
     private float currentMovement;
     private float raycastLength;
@@ -19,7 +19,7 @@ public class NormalEnemyWalkingState : BaseState
         body = Owner.GetPlayerRB();
         bodyTransform = body.transform;
         collider = body.gameObject.GetComponent<BoxCollider2D>();
-        actor = (NormalEnemyStateMachine)Owner.GetPlayer();
+        actor = (StickyEnemyStateMachine)Owner.GetPlayer();
         currentMovement = movementSpeed;
         raycastLength = collider.size.x;
     }
@@ -29,7 +29,7 @@ public class NormalEnemyWalkingState : BaseState
         body.gravityScale = 0;
     }
 
-    public override void OnUpdate()
+    public override void OnUpdate() // change movement type later
     {
         body.velocity += (Vector2) bodyTransform.right * currentMovement; // not using delta time cause this is cheap shit
         body.velocity = Vector2.ClampMagnitude(body.velocity, movementSpeed);
@@ -37,21 +37,16 @@ public class NormalEnemyWalkingState : BaseState
         RaycastHit2D hit;
         hit = Physics2D.Raycast(bodyTransform.position, body.velocity.normalized, raycastLength, LayerMask.GetMask("Default"));
 
-        if (hit)
+        if (hit || !GroundCheck())
         {
             currentMovement *= -1;
             actor.FaceRight(currentMovement > 0);
         }
 
-        if (!GroundCheck())
-        {
-            Owner.ChangeState(StateEnums.FALLING);
-        }
     }
 
     public override void OnFixedUpdate()
     {
-        
     }
 
     public override void OnExit()
@@ -60,22 +55,24 @@ public class NormalEnemyWalkingState : BaseState
 
     private bool GroundCheck()
     {
+        Vector2 pos = bodyTransform.position;
+        if (currentMovement > 0)
+        {
+            pos += (Vector2)bodyTransform.right;
+        }
+        else
+        {
+            pos -= (Vector2)bodyTransform.right;
+        }
+
         RaycastHit2D hit;
-        hit = Physics2D.Raycast(bodyTransform.position, -bodyTransform.up, raycastLength, LayerMask.GetMask("Default"));
+        hit = Physics2D.Raycast(pos, -bodyTransform.up, raycastLength, LayerMask.GetMask("Default"));
 
         if (hit)
         {
             return true;
         }
         
-        hit = Physics2D.BoxCast(bodyTransform.position,
-            collider.bounds.extents * 2,
-            0, -bodyTransform.up,
-            0.05f, LayerMask.GetMask("Default"));
-        if (hit)
-        {
-            return true;
-        }
 
         return false;
     }
