@@ -145,6 +145,15 @@ public class JumpingState : BaseState
 
         if (hit)
         {
+            PlatformEffector2D effector = hit.collider.gameObject.GetComponent<PlatformEffector2D>();
+            if (effector != null)
+            {
+                float dot = Vector2.Dot(movementDirection, hit.transform.up);
+                if (dot > 0)
+                {
+                    return false;
+                }
+            }
             player.wallNormal = hit.normal;
             return true;
         }

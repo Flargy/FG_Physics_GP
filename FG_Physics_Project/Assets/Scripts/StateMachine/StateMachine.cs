@@ -8,7 +8,8 @@ public enum StateEnums
     FALLING = 2, 
     WALLCLIMBING = 3, 
     WALLJUMPING = 4,
-    DASH = 5
+    DASH = 5,
+    DEATH = 6
     
 }
 
