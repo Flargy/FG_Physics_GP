@@ -101,8 +101,6 @@ public class FallingState : BaseState
             0, -bodyTransform.up,
             0.05f, LayerMask.GetMask("Default"));
         
-        player.DrawCube(bodyTransform.position, collider.bounds.extents * 2); 
-        
         if (hit)
         {
             return true;
@@ -110,8 +108,6 @@ public class FallingState : BaseState
 
         return false;
     }
-
-   
 
     private bool ConnectedWithWall()
     {

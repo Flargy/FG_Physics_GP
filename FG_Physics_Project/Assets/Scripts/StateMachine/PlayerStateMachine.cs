@@ -21,9 +21,6 @@ public class PlayerStateMachine : StateMachineBase
     private Rigidbody2D body;
     private float xScale;
 
-    private Vector3 center;
-    private Vector3 size;
-
     void Awake()
     {
         body = GetComponent<Rigidbody2D>();
@@ -65,15 +62,6 @@ public class PlayerStateMachine : StateMachineBase
         float direction = value ? xScale: -xScale;
         transform.localScale = new Vector3(direction ,transform.localScale.y, transform.localScale.z);
     }
-
-    public void DrawCube(Vector3 center, Vector3 size)
-    {
-        this.center = center;
-        this.size = size;
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireCube(center, size);
-    }
+    
+    
 }

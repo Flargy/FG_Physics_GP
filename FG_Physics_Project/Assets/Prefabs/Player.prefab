@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4638633683352749231}
   - component: {fileID: -6577985355823179373}
   - component: {fileID: 5240838727090883948}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -254,6 +254,7 @@ MonoBehaviour:
   baseGravity: 0
   wallInputDirection: {x: 0, y: 0}
   anim: {fileID: 0}
+  drag: 0
 --- !u!95 &5240838727090883948
 Animator:
   serializedVersion: 4
