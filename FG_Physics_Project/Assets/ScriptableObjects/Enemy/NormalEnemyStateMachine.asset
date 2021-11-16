@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99f33d520846e5e4cb8a994d357e4a2c, type: 3}
+  m_Name: NormalEnemyStateMachine
+  m_EditorClassIdentifier: 
+  MyStates:
+  - {fileID: 11400000, guid: 37bff20309da59c4dadb4eaf3dc395d9, type: 2}
+  - {fileID: 11400000, guid: 6d4e160f83e4e2246ab590b6d3106908, type: 2}

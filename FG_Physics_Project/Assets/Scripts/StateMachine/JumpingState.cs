@@ -68,7 +68,6 @@ public class JumpingState : BaseState
         float direction = Vector2.Dot(body.velocity, (Vector2)bodyTransform.up);
         if (direction <= 0.0f)
         {
-            Debug.Log("swap to falling");
             Owner.ChangeState(StateEnums.FALLING);
         }
         HandleInput();

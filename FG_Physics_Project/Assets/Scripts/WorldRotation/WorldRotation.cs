@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -12,6 +14,13 @@ public enum RotationType
 
 public class WorldRotation : MonoBehaviour
 {
+    private static WorldRotation instance = null;
+
+    public static WorldRotation Instance
+    {
+        get { return instance; }
+    }
+    
     [SerializeField] private Transform camera;
     [SerializeField, Range(0.1f, 100)] private float rotationTime;
     [SerializeField, Range(0.0f, 1.0f)] private float gravitySwapCutoff = 0.7f;
@@ -30,6 +39,16 @@ public class WorldRotation : MonoBehaviour
 
      private bool isRotating = false;
      private bool goPositive = true;
+
+     private List<NormalEnemyStateMachine> enemyList = new List<NormalEnemyStateMachine>();
+
+     private void Awake()
+     {
+         if (instance == null)
+         {
+             instance = this;
+         }
+     }
 
      void Start()
     {
@@ -70,6 +89,10 @@ public class WorldRotation : MonoBehaviour
                 Physics2D.gravity = desiredRotation * Physics.gravity;
                 hasFlipped = true;
                 player.rotation = desiredRotation;
+                foreach (NormalEnemyStateMachine enemy in enemyList)
+                {
+                    enemy.Rotate();
+                }
                 RotatingPlayer rotatingPlayer = player.gameObject.GetComponent<RotatingPlayer>();
                 PlayerStateMachine playerStateMachine = player.GetComponent<PlayerStateMachine>();
                 if (playerStateMachine)
@@ -118,6 +141,19 @@ public class WorldRotation : MonoBehaviour
 
         hasFlipped = false;
         isRotating = false;
+    }
+
+    public void RegisterEnemy(NormalEnemyStateMachine enemy)
+    {
+        enemyList.Add(enemy);
+    }
+
+    public void UnregisterEnemy(NormalEnemyStateMachine enemy)
+    {
+        if (enemyList.Contains(enemy))
+        {
+            enemyList.Remove(enemy);
+        }
     }
     
 }
