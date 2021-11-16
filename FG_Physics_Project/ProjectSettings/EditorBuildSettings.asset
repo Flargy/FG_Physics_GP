@@ -14,10 +14,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GD_Seb_test_1.unity
     guid: a77b9719550008a4facdfd68f0b02a30
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/WorldRotation.unity
     guid: a7213050bb804bd42ab8cdfe24fe6974
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/WallJumping.unity
     guid: 6e3a051f176097648bfa38639016975e
+  - enabled: 1
+    path: Assets/Scenes/ActualGame/TwoSidedDungeon.unity
+    guid: 3319d1e0a15b0c747baab35da3492f84
   m_configObjects: {}
