@@ -121,8 +121,10 @@ public class NormalEnemy : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            Vector2 direction = (other.transform.position - transform.position).normalized;
+            Vector2 direction = ((Vector2)other.transform.position - (Vector2)transform.position).normalized;
             float dot = Vector2.Dot(direction, -other.transform.up);
+            
+            Debug.Log(direction);
 
             if (dot < -0.5f)
             {
