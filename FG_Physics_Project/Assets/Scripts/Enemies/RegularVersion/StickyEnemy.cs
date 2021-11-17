@@ -100,7 +100,7 @@ public class StickyEnemy : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             Vector2 direction = (other.transform.position - transform.position).normalized;
-            float dot = Vector2.Dot(direction, -other.transform.up);
+            float dot = Vector2.Dot(direction, -transform.up);
 
             if (dot < -0.5f)
             {
