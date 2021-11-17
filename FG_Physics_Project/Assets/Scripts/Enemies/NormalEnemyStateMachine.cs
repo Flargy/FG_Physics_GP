@@ -35,7 +35,8 @@ public class NormalEnemyStateMachine : EnemyBaseStateMachine
 
     private void Start()
     {
-        WorldRotation.Instance.RegisterEnemy(this);
+        if(WorldRotation.Instance)
+            WorldRotation.Instance.RegisterEnemy(this);
     }
 
     private void Update()
