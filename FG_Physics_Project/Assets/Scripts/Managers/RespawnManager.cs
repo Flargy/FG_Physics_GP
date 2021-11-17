@@ -28,11 +28,11 @@ public class RespawnManager : MonoBehaviour
     {
         player = p;
     }
-    
 
     public void Respawn()
     {
         player.Respawn(respawnPoint.position);
+        UI_Manager.Instance.RespawnDeathScreen();
     }
 
     private void OnTriggerExit2D(Collider2D other)
