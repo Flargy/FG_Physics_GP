@@ -143,7 +143,8 @@ public class NormalEnemy : MonoBehaviour
         {
             variable.enabled = false;
         }
-        WorldRotation.Instance.UnregisterEnemy(this);
+        if(WorldRotation.Instance)
+            WorldRotation.Instance.UnregisterEnemy(this);
         Destroy(this, 2.5f);
         sprite.gameObject.GetComponent<SpriteRenderer>().renderingLayerMask = 50;
         body.velocity = Vector2.zero;
