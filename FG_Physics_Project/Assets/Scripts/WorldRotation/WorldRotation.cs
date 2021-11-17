@@ -44,7 +44,7 @@ public class WorldRotation : MonoBehaviour
      private float randomDelay;
      private float countDown;
 
-     private List<NormalEnemyStateMachine> enemyList = new List<NormalEnemyStateMachine>();
+     private List<NormalEnemy> enemyList = new List<NormalEnemy>();
 
      private void Awake()
      {
@@ -109,7 +109,7 @@ public class WorldRotation : MonoBehaviour
                 Physics2D.gravity = desiredRotation * Physics.gravity;
                 hasFlipped = true;
                 player.rotation = desiredRotation;
-                foreach (NormalEnemyStateMachine enemy in enemyList)
+                foreach (NormalEnemy enemy in enemyList)
                 {
                     enemy.Rotate();
                 }
@@ -170,12 +170,12 @@ public class WorldRotation : MonoBehaviour
 
     }
 
-    public void RegisterEnemy(NormalEnemyStateMachine enemy)
+    public void RegisterEnemy(NormalEnemy enemy)
     {
         enemyList.Add(enemy);
     }
 
-    public void UnregisterEnemy(NormalEnemyStateMachine enemy)
+    public void UnregisterEnemy(NormalEnemy enemy)
     {
         if (enemyList.Contains(enemy))
         {
