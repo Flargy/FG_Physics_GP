@@ -6,7 +6,8 @@ public class CrystalPickup : PickupBase
 {
     protected override void Activate()
     {
-        UI_Manager.Instance.AddCrystal();
+        if(UI_Manager.Instance)
+            UI_Manager.Instance.AddCrystal();
         Destroy(gameObject);
     }
 }

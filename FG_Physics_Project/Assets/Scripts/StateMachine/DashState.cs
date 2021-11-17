@@ -22,7 +22,7 @@ public class DashState : BaseState
         player = (PlayerStateMachine)Owner.GetPlayer();
         bodyTransform = player.gameObject.GetComponent<Transform>();
         collider = body.gameObject.GetComponent<BoxCollider2D>();
-        raycastLength = collider.bounds.extents.magnitude + 0.01f;
+        raycastLength = collider.bounds.extents.magnitude - 0.3f;
     }
 
     public override void OnEnter()
@@ -110,7 +110,7 @@ public class DashState : BaseState
         }
         else
         {
-            movementDirection = Vector2.zero;
+            movementDirection = bodyTransform.up;
         }
 
         RaycastHit2D hit;
