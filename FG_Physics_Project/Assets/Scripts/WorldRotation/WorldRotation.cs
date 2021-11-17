@@ -78,9 +78,12 @@ public class WorldRotation : MonoBehaviour
             timeAccumulator += Time.deltaTime / randomDelay;
 
         countDown -= Time.deltaTime;
-        
-        UI_Manager.Instance.SetTimerBar(1-timeAccumulator);
-        UI_Manager.Instance.SetTimerText((int)(countDown + 0.55f));
+
+        if (UI_Manager.Instance)
+        {
+            UI_Manager.Instance.SetTimerBar(1-timeAccumulator);
+            UI_Manager.Instance.SetTimerText((int)(countDown + 0.55f));
+        }
 
             if (timeAccumulator >= 1.0f)
         {

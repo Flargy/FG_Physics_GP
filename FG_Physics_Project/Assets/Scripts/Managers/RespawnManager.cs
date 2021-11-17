@@ -32,7 +32,8 @@ public class RespawnManager : MonoBehaviour
     public void Respawn()
     {
         player.Respawn(respawnPoint.position);
-        UI_Manager.Instance.RespawnDeathScreen();
+        if(UI_Manager.Instance)
+            UI_Manager.Instance.RespawnDeathScreen();
     }
 
     private void OnTriggerExit2D(Collider2D other)
