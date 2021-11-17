@@ -21,6 +21,9 @@ EditorBuildSettings:
     path: Assets/Scenes/WallJumping.unity
     guid: 6e3a051f176097648bfa38639016975e
   - enabled: 1
+    path: Assets/Scenes/ActualGame/Seb_lvl3.unity
+    guid: 881f3d0067bf1e742953184a0fd6710b
+  - enabled: 1
     path: Assets/Scenes/ActualGame/TwoSidedDungeon.unity
     guid: 3319d1e0a15b0c747baab35da3492f84
   m_configObjects: {}
