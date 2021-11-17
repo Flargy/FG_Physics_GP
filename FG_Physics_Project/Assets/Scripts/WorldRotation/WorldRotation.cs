@@ -25,6 +25,8 @@ public class WorldRotation : MonoBehaviour
     [SerializeField, Range(0.1f, 100)] private float rotationTime;
     [SerializeField, Range(0.0f, 1.0f)] private float gravitySwapCutoff = 0.7f;
     [SerializeField] private float rotationDelay = 5.0f;
+    [SerializeField] private float rotationDelayMax = 10.0f;
+    [SerializeField] private bool useRandomRange = false;
     [SerializeField] private Transform player;
     [SerializeField] private RotationType rotationType = RotationType.FullRotation;
     [SerializeField] private Transform background;
@@ -39,6 +41,8 @@ public class WorldRotation : MonoBehaviour
 
      private bool isRotating = false;
      private bool goPositive = true;
+     private float randomDelay;
+     private float countDown;
 
      private List<NormalEnemyStateMachine> enemyList = new List<NormalEnemyStateMachine>();
 
@@ -54,7 +58,11 @@ public class WorldRotation : MonoBehaviour
     {
         desiredRotation = camera.rotation * rotationDegrees;
         previousRotation = camera.rotation;
-
+        randomDelay = Mathf.Max(rotationDelay, rotationDelayMax);
+        countDown = rotationDelay;
+        if (useRandomRange)
+            countDown = randomDelay;
+        
     }
 
     private void Update()
@@ -63,9 +71,21 @@ public class WorldRotation : MonoBehaviour
         {
             return;
         }
-        timeAccumulator += Time.deltaTime / rotationDelay;
 
-        if (timeAccumulator >= 1.0f)
+        if (!useRandomRange)
+            timeAccumulator += Time.deltaTime / rotationDelay;
+        else
+            timeAccumulator += Time.deltaTime / randomDelay;
+
+        countDown -= Time.deltaTime;
+
+        if (UI_Manager.Instance)
+        {
+            UI_Manager.Instance.SetTimerBar(1-timeAccumulator);
+            UI_Manager.Instance.SetTimerText((int)(countDown + 0.55f));
+        }
+
+            if (timeAccumulator >= 1.0f)
         {
             StartCoroutine(StartWorldRotation());
             timeAccumulator = 0.0f;
@@ -141,6 +161,13 @@ public class WorldRotation : MonoBehaviour
 
         hasFlipped = false;
         isRotating = false;
+        countDown = rotationDelay;
+        if (useRandomRange)
+        {
+            randomDelay = Mathf.Max(rotationDelay, rotationDelayMax);
+            countDown = randomDelay;
+        }
+
     }
 
     public void RegisterEnemy(NormalEnemyStateMachine enemy)
