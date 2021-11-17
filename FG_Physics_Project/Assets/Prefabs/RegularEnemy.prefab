@@ -116,8 +116,8 @@ GameObject:
   - component: {fileID: 7995858257389715565}
   - component: {fileID: 7995858257389715567}
   - component: {fileID: 7995858257389715566}
-  - component: {fileID: 7995858257389715561}
   - component: {fileID: 3477715131305917314}
+  - component: {fileID: 8589874947657116510}
   m_Layer: 8
   m_Name: RegularEnemy
   m_TagString: Enemy
@@ -188,21 +188,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &7995858257389715561
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7995858257389715560}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12d1282ebc93d2c47942e8d6dfbaa9db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myStateMachine: {fileID: 11400000, guid: 6f2fbba2f79a1d74cb0664dedf2f2e55, type: 2}
-  sprite: {fileID: 0}
-  isDead: 0
 --- !u!58 &3477715131305917314
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -219,3 +204,20 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.82
+--- !u!114 &8589874947657116510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7995858257389715560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf460262b22e9bc4381b2d67f0e42395, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementSpeed: 5
+  sprite: {fileID: 7995858257052292272}
+  maximumFallSpeed: 6
+  fallingGravity: 5
+  fullSpinDuration: 0.5

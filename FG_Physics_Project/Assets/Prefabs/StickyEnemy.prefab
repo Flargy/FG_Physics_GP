@@ -117,7 +117,7 @@ GameObject:
   - component: {fileID: 1657015451701992773}
   - component: {fileID: 1657015451701992772}
   - component: {fileID: 5209339870231406248}
-  - component: {fileID: 5209339870231406249}
+  - component: {fileID: 6198132987250933328}
   m_Layer: 8
   m_Name: StickyEnemy
   m_TagString: Enemy
@@ -204,7 +204,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.46
---- !u!114 &5209339870231406249
+--- !u!114 &6198132987250933328
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -213,10 +213,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1657015451701992770}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9f172652e27d2043ab59f5b4b876afc, type: 3}
+  m_Script: {fileID: 11500000, guid: 6f85b5667b1638246b6b3e75bb656486, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myStateMachine: {fileID: 11400000, guid: d8b7b137076874c48bb17257434f7d14, type: 2}
-  sprite: {fileID: 0}
+  deathTime: 1
+  movementSpeed: 2.5
+  sprite: {fileID: 1657015451095959962}
   isDead: 0
-  anim: {fileID: 0}
+  anim: {fileID: 1657015451095959940}

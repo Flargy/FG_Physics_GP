@@ -35,8 +35,8 @@ public class NormalEnemyStateMachine : EnemyBaseStateMachine
 
     private void Start()
     {
-        if(WorldRotation.Instance)
-            WorldRotation.Instance.RegisterEnemy(this);
+        /*if(WorldRotation.Instance)
+            WorldRotation.Instance.RegisterEnemy(this);*/
     }
 
     private void Update()
@@ -54,7 +54,7 @@ public class NormalEnemyStateMachine : EnemyBaseStateMachine
         {
             variable.enabled = false;
         }
-        WorldRotation.Instance.UnregisterEnemy(this);
+        /*WorldRotation.Instance.UnregisterEnemy(this);*/
         Destroy(this, 2.5f);
         sprite.gameObject.GetComponent<SpriteRenderer>().renderingLayerMask = 50;
     }
