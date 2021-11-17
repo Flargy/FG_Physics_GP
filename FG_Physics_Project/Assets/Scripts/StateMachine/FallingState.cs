@@ -22,7 +22,7 @@ public class FallingState : BaseState
         bodyTransform = body.transform;
         collider = body.gameObject.GetComponent<BoxCollider2D>();
         player = (PlayerStateMachine)Owner.GetPlayer();
-        raycastLength = collider.bounds.extents.magnitude + 0.01f;
+        raycastLength = collider.bounds.extents.magnitude - 0.3f;
 
     }
 
@@ -37,15 +37,14 @@ public class FallingState : BaseState
         HandleInput();
         ControlDirection();
         float direction = Vector2.Dot(body.velocity, (Vector2)bodyTransform.up);
-        
-        if (ConnectedWithWall())
-        {
-            Owner.ChangeState(StateEnums.WALLCLIMBING);
-        }
-        
+
         if (IsGrounded())
         {
             Owner.ChangeState(StateEnums.WALKING);
+        }
+        if (ConnectedWithWall())
+        {
+            Owner.ChangeState(StateEnums.WALLCLIMBING);
         }
     }
 
@@ -89,7 +88,7 @@ public class FallingState : BaseState
         body.velocity = Vector2.ClampMagnitude(body.velocity, maxVelocity);
     }
     
-    private bool IsGrounded()
+    private bool IsGrounded() // this causes an issue with platforms you can move through
     {
         // this works as a safety for avoiding wall collisions being seen as negative
         if (Physics2D.Raycast(bodyTransform.position, -bodyTransform.up, collider.bounds.extents.magnitude *1.05f, LayerMask.GetMask("Default")))
@@ -109,7 +108,7 @@ public class FallingState : BaseState
         return false;
     }
 
-    private bool ConnectedWithWall()
+    private bool ConnectedWithWall() // this causes an issue with platforms you can move through
     {
         Vector2 movementDirection;
         if (player.direction == StateMovementDiraction.RIGHT)
@@ -122,7 +121,7 @@ public class FallingState : BaseState
         }
         else
         {
-            movementDirection = Vector2.zero;
+            movementDirection = -bodyTransform.up;
         }
 
         RaycastHit2D hit;
