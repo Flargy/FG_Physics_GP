@@ -9,12 +9,16 @@ public class UI_Manager : MonoBehaviour
 
     [SerializeField] private Text crystalText;
     [SerializeField] private Text rotationTimeText;
+    [SerializeField] private Text DeathText;
+    [SerializeField] private Text HiddenItemText;
     [SerializeField] private Image rotationBar;
     [SerializeField] private Image deathScreen;
     [SerializeField] private float deathScreenDuration = 0.7f;
     [SerializeField, Range(0, 255)] private int deathScreenAlpha = 125;
 
     private int crystalsGathered = 0;
+    private int deaths = 0;
+    private int hiddenItemsFound = 0;
     private float halfDeathDuration;
     private float deathTimer;
     private float alphaPercentage;
@@ -60,6 +64,8 @@ public class UI_Manager : MonoBehaviour
     {
         if(deathRoutine != null)
             StopCoroutine(deathRoutine);
+        deaths++;
+        DeathText.text = deaths.ToString();
         deathRoutine = StartCoroutine(DeathTint());
     }
 
@@ -89,5 +95,16 @@ public class UI_Manager : MonoBehaviour
         deathTimer = 0.0f;
 
     }
-    
+
+    public void Deactivate()
+    {
+        gameObject.SetActive(false);
+    }
+
+    public void AddHiddenItem()
+    {
+        hiddenItemsFound++;
+        HiddenItemText.text = hiddenItemsFound.ToString();
+    }
+
 }
