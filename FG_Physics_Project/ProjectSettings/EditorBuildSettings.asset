@@ -29,4 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ActualGame/FourSidedRotation.unity
     guid: 7a3bf5f03f2dcb548b41448c16a3fc31
+  - enabled: 1
+    path: Assets/Scenes/ActualGame/EndCredits.unity
+    guid: 44846bf534d03164db9c05969af2e382
   m_configObjects: {}
