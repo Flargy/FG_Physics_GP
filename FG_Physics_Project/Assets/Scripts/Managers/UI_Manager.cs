@@ -24,6 +24,21 @@ public class UI_Manager : MonoBehaviour
     private float alphaPercentage;
     private Coroutine deathRoutine;
 
+    public int GetCrystals()
+    {
+        return crystalsGathered;
+    }
+
+    public int GetDeath()
+    {
+        return deaths;
+    }
+
+    public int GetHiddenItems()
+    {
+        return hiddenItemsFound;
+    }
+
     private void Awake()
     {
         if (!instance)
