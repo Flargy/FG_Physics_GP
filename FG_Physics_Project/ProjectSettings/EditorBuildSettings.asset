@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ActualGame/TwoSidedDungeon.unity
     guid: 3319d1e0a15b0c747baab35da3492f84
+  - enabled: 1
+    path: Assets/Scenes/ActualGame/FourSidedRotation.unity
+    guid: 7a3bf5f03f2dcb548b41448c16a3fc31
   m_configObjects: {}
