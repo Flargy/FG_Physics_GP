@@ -13,6 +13,7 @@ public class EnvironmentHazard : MonoBehaviour
 
             if (dotValue < 0.7f)
             {
+                Debug.Log("Respawn");
                 RespawnManager.Instance.Respawn();
             }
             

@@ -26,6 +26,8 @@ public class CreditsUI : MonoBehaviour
         {
             deathTauntText.gameObject.SetActive(true);
         }
+
+        Destroy(UI_Manager.Instance.gameObject);
     }
 
     

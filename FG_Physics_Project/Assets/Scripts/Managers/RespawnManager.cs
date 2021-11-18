@@ -1,11 +1,15 @@
 
 using System;
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
 public class RespawnManager : MonoBehaviour
 {
     [SerializeField] private Transform respawnPoint;
+
+    private float deathDelay = 0.2f;
+    private bool canDie = true;
 
     private static RespawnManager instance = null;
     
@@ -31,6 +35,12 @@ public class RespawnManager : MonoBehaviour
 
     public void Respawn()
     {
+        if (!canDie)
+        {
+            return;
+        }
+
+        StartCoroutine(DeathTimer());
         player.Respawn(respawnPoint.position);
         if(UI_Manager.Instance)
             UI_Manager.Instance.RespawnDeathScreen();
@@ -42,5 +52,18 @@ public class RespawnManager : MonoBehaviour
         {
             Respawn();
         }
+    }
+
+    private IEnumerator DeathTimer()
+    {
+        canDie = false;
+        float timer = 0;
+        while (timer <= deathDelay)
+        {
+            yield return null;
+            timer += Time.deltaTime;
+        }
+
+        canDie = true;
     }
 }
